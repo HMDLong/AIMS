@@ -11,6 +11,8 @@ public class AIMS {
     private static int currentOrder = 0;
     private static List<Order> orderList = new ArrayList<>();
 
+    private static Scanner keyb; // declare a keyboard inputStream shared for all in AIMS
+
     private static void changeCurOrder(int order_index) {
         if(order_index > orderList.size()) {
             System.out.printf("Khong ton tai Order #%d\n", order_index);
@@ -44,7 +46,6 @@ public class AIMS {
         System.out.println("0. Exit");
         System.out.print("----------------------------");
 
-        Scanner keyb = new Scanner(System.in);
         int function;
         do {
             System.out.print("\nChoose a function <0-1-2-3-4>: ");
@@ -58,7 +59,6 @@ public class AIMS {
                 default: break;
             }
         } while(function != 0);
-        keyb.close();
     }
 
     public static void showAdminMenu() {
@@ -70,7 +70,6 @@ public class AIMS {
         System.out.println("0. Exit");
         System.out.println("----------------------------");
 
-        Scanner keyb = new Scanner(System.in);
         int function;
         do {
             System.out.println("\nChoose a function <0-1-2-3>: ");
@@ -83,11 +82,9 @@ public class AIMS {
                 default: System.out.println("Invalid function"); break;
             }
         } while(function != 0);
-        keyb.close();
     }
 
     public static void showCreateMenu() {
-        Scanner keyb = new Scanner(System.in);
         System.out.println("""
 
                 1. Book
@@ -101,7 +98,6 @@ public class AIMS {
             case 3 -> ListOfProduct.add(createMediaFromConsole(new CDFactory()));
             default -> System.out.println("Invalid item to create");
         }
-        keyb.close();
     }
 
     public static Media createMediaFromConsole(AbstractItemFactory factory) {
@@ -109,23 +105,20 @@ public class AIMS {
     }
 
     public static void showDeleteMenu() { //experimental
-        Scanner keyb = new Scanner(System.in);
         System.out.print("\n> Delete item id: ");
         ListOfProduct.removeIf(e -> (e.getId() == keyb.nextInt()));
-        keyb.close();
     }
 
     public static void main(String[] args) {
-        Scanner keyboard = new Scanner(System.in);
-
+        keyb = new Scanner(System.in);
         System.out.println("Who are you <0=customer, 1=admin>");
-        int user = keyboard.nextInt();
+        int user = keyb.nextInt();
         switch (user) {
             case 0 -> showMenu();
             case 1 -> showAdminMenu();
             default -> {
                 System.out.println("Invalid user!");
-                keyboard.close();
+                keyb.close();
             }
         }
     }
