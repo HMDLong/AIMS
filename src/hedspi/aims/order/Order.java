@@ -38,10 +38,6 @@ public class Order {
         return this.orderQty;
     }
 
-    public void setOrderQty(int set_qty) { /* chi cho muc dich chay test,khi vao he thong thuc se bo di */
-        this.orderQty = set_qty;
-    }
-
     //in ra don dat hang hien tai
     public void printOrder() {
         System.out.print("Date: ");

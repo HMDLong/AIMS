@@ -44,8 +44,8 @@ public class DigitalVideoDisc extends Disc implements Playable{
 
     public boolean isTitleContain(String title) {
         String[] tokenList = title.toLowerCase().split(" ");
-        for(int i = 0; i < tokenList.length; i++) {
-            if(!this.title.toLowerCase().contains(tokenList[i])) {
+        for (String s : tokenList) {
+            if (!this.title.toLowerCase().contains(s)) {
                 return false;
             }
         }

@@ -8,22 +8,21 @@ public class CDFactory implements AbstractItemFactory{
         Scanner keybr = new Scanner(System.in);
         System.out.println("Input CD info");
         // ask for artist info
-        System.out.printf("> Artist: ");
+        System.out.print("> Artist: ");
         disc.setArtist(keybr.next());
         // ask for track info
         boolean next = true;
         do {
             Track newTrack = new Track();
-            System.out.printf("-----\n");
-            System.out.printf("Track title: ");
+            System.out.print("-----\n");
+            System.out.print("Track title: ");
             newTrack.setTitle(keybr.next());
-            System.out.printf("Track length: ");
+            System.out.print("Track length: ");
             newTrack.setLength(keybr.nextInt());
-            System.out.printf("Add another track? [y=1/n=0]: ");
+            System.out.print("Add another track? [y=1/n=0]: ");
             if(keybr.nextInt() == 0)
                 next = false;
         } while(next);
-        keybr.close();
         return disc;
     }
 }

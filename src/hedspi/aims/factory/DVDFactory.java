@@ -16,7 +16,6 @@ public class DVDFactory implements AbstractItemFactory{
         newDVD.setLength(keybr.nextInt());
         System.out.println("Nhap cost: ");
         newDVD.setCost(keybr.nextFloat());
-        keybr.close();
         return newDVD;
     }
 }

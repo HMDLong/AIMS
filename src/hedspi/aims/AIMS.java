@@ -6,24 +6,12 @@ import hedspi.aims.order.*;
 import java.util.*;
 
 public class AIMS {
-    private static List<Media> ListOfProduct = new ArrayList<>();
+    private final static List<Media> ListOfProduct = new ArrayList<>();
 
-    private static int currentOrder = 0;
-    private static List<Order> orderList = new ArrayList<>();
+    private static int id = 0;
+    private final static List<Order> orderList = new ArrayList<>();
 
     private static Scanner keyb; // declare a keyboard inputStream shared for all in AIMS
-
-    private static void changeCurOrder(int order_index) {
-        if(order_index > orderList.size()) {
-            System.out.printf("Khong ton tai Order #%d\n", order_index);
-            return;
-        }
-        currentOrder = order_index-1;
-    }
-
-    private static void whichOrderIsThis() {
-        System.out.printf("Day la order #%d (/%d)\n", currentOrder+1, orderList.size());
-    }
 
     private static void makeNewOrder() {
         if(orderList.size() == Order.getOrderLimit()) {
@@ -33,7 +21,18 @@ public class AIMS {
         Order newOrder = new Order();
         orderList.add(newOrder);
         System.out.printf("Tao thanh cong order #%d\n", orderList.size());
-        changeCurOrder(orderList.size());
+    }
+
+    public static void addItemToOrder(){
+        //TODO
+    }
+
+    public static void removeItemFromOrder(){
+        //TODO
+    }
+
+    public static void showOrder(){
+        //TODO
     }
 
     public static void showMenu() {
@@ -51,11 +50,11 @@ public class AIMS {
             System.out.print("\nChoose a function <0-1-2-3-4>: ");
             function = keyb.nextInt();
             switch(function) {
-                case 0: makeNewOrder(); break;
-                case 1: break;
-                case 2: break;
-                case 3: break;
-                case 4: break;
+                case 1: makeNewOrder(); break;
+                case 2: addItemToOrder(); break;
+                case 3: removeItemFromOrder(); break;
+                case 4: showOrder(); break;
+                case 0: break;
                 default: break;
             }
         } while(function != 0);
@@ -77,16 +76,21 @@ public class AIMS {
             switch(function) {
                 case 1: showCreateMenu(); break;
                 case 2: showDeleteMenu(); break;
-                case 3: break;
+                case 3: showItemList(); break;
                 case 0: break;
                 default: System.out.println("Invalid function"); break;
             }
         } while(function != 0);
     }
 
+    public static Media createMediaFromConsole(AbstractItemFactory factory) {
+        Media newMedia = factory.createMediaItemFromConsole();
+        newMedia.setId(id++);
+        return newMedia;
+    }
+
     public static void showCreateMenu() {
         System.out.println("""
-
                 1. Book
                 2. DVD
                 3. CD
@@ -100,13 +104,15 @@ public class AIMS {
         }
     }
 
-    public static Media createMediaFromConsole(AbstractItemFactory factory) {
-        return factory.createMediaItemFromConsole();
-    }
-
     public static void showDeleteMenu() { //experimental
         System.out.print("\n> Delete item id: ");
         ListOfProduct.removeIf(e -> (e.getId() == keyb.nextInt()));
+    }
+
+    public static void showItemList(){
+        for(Media item : ListOfProduct){
+            item.printInfo();
+        }
     }
 
     public static void main(String[] args) {
@@ -116,11 +122,9 @@ public class AIMS {
         switch (user) {
             case 0 -> showMenu();
             case 1 -> showAdminMenu();
-            default -> {
-                System.out.println("Invalid user!");
-                keyb.close();
-            }
+            default -> System.out.println("Invalid user!");
         }
+        keyb.close();
     }
 }
 
